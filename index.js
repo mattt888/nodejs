@@ -1,32 +1,56 @@
 const http = require('http');
+const server = http.createServer( (req, res) => {
+    res.writeHead( 200, {'Content-Type': 'text/html; charset=utf-8'})
 
-const server = http.createServer((req, res) => {
- 
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/html');
-  res.write(`<!DOCTYPE html>
-  <html>
-  <head>
-      <meta charset="UTF-8" />
-      <title>Hello world demo</title>
-  </head>
-  <body>
-      <h1>Hello world</h1>`);
-      fetch( 'https://jsonplaceholder.typicode.com/posts' )
-        .then(resp=>resp.json())
-        .then(resp=>{
-          resp.forEach( row => {
-            res.write(`<h3>${row.title}</h3>`)
-            res.write(`<p>${row.body}</p>`)
-          } )
-          res.write(`</body>
-          </html>`);
-        })
-        .finally(()=>{
+    if ( req.url === '/'){
 
-          res.end();
-        })
+        if(req.method === 'GET'){
 
+            res.write(`<p>Kezdőoldal</p>`)
+
+            res.write(`<form action="/" method=post>  
+                            <input type="text" name="name">    
+                            <button>Küldés</button>
+                       </form>`)
+          
+            res.write(`<p>Request method: ${req.method}</p>`)
+            res.write(`<p>${req.method}</p>`)
+            
+            console.log('GET request');
+
+        }
+        else if (req.method === 'POST'){
+
+            res.write(`<p>Request method: ${req.method}</p>`)
+            res.write(`<p>POST metódussal küldve: ${req.method}</p>`)
+            console.log('ellenőrzés = POST method');
+
+            let data = ''
+            req.on('data', chunk => {
+            data += chunk
+            console.log('Buffer a következő sorban: ')
+            console.log(chunk)
+            console.log('Chunk: ' + chunk) 
+            console.log('Data: ' + data)
+            console.log('**************')
+            })
+        }
+        else {
+            res.write(`405 method not allowed`)
+        }
+        
+    }
+    else if (req.url === '/about'){
+        res.write('Rólunk')
+    }
+    else if (req.url === '/contact'){
+        res.write('Kapcsolat')
+    }
+    else {
+        res.write('Az oldal nem található')
+    }
+
+    res.end()
 });
 
 server.listen(3000, () => {
