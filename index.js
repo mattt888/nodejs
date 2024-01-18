@@ -11,19 +11,23 @@ const server = http.createServer( (req, res) => {
     }
 
     else if (req.url === '/about'){
-        res.write('Rólunk')
+        utilities.getView('about', res)
+        return
     }
 
     else if (req.url === '/contact'){
-        res.write('Kapcsolat')
+        utilities.getView('contact', res)
+        return
     }
 
     else {
         res.write('Az oldal nem található')
     }
 
+    res.end();
+
 });
 
 server.listen(3000, () => {
-  console.log('Server is running on port 3000');
+  console.log('Server is running on port 3000'); 
 });
