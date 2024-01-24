@@ -1,8 +1,5 @@
 const fs = require('node:fs')
-
-function getHTMLPart(filename) {
-    return fs.readFileSync(`${__dirname}/views/includes/${filename}.html`).toString()
-}
+const html = require('./htmlparts')
 
 module.exports = {
     getView : function (filename, res){
@@ -11,9 +8,7 @@ module.exports = {
                 console.log('Hiba keletkezett a folyamat során', error);
             }
             else {
-            // {navigation} 
-                console.log(getHTMLPart('nav'));
-                const finaldata = String(data).replace('{navigation}', getHTMLPart('nav'))
+                const finaldata = String(data).replace('{navigation}', html.getHTMLPart('nav'))
                 res.write(finaldata)
             }
 
