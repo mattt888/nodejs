@@ -1,6 +1,7 @@
 const http = require('http');
 const fs = require('fs')
 const utilities = require('./utilities')
+const querystring = require('querystring')
 
 const server = http.createServer( (req, res) => {
     res.writeHead( 200, {'Content-Type': 'text/html; charset=utf-8'})
@@ -20,6 +21,15 @@ const server = http.createServer( (req, res) => {
         return
     }
 
+    else if (req.url === '/users'){
+        fetch('https://jsonplaceholder.typicode.com/users')
+            .then(response => response.text())
+            .then(result => {
+                utilities.getView('users', res, result)
+            })
+            return;
+    }
+    
     else {
         res.write('Az oldal nem található')
     }
