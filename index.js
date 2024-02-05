@@ -41,8 +41,12 @@ const server = http.createServer( (req, res) => {
     }
 
     else if (/^\/users\/([0-9])/.test(req.url) ) {
+        console.log('req.url értéke:', req.url);
+        console.log('else if kifejezés értéke:', /^\/users\/([0-9])/.test(req.url));
         let idpart =  req.url.split('/')
+        console.log('idpart értéke:', idpart);
         const id = idpart[idpart.length-1] || false
+        console.log('id változó értéke:', id);
 
         if (id) {
             fetch('https://jsonplaceholder.typicode.com/users')
