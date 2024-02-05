@@ -52,9 +52,17 @@ const server = http.createServer( (req, res) => {
                         return userrr.id == id
                     })
                     console.log(user)
+                    const userDetails = user.map( itemek => {
+                        return `<li>id: ${itemek.id}</li>
+                                <li>username: ${itemek.username}</li>
+                                <li>email: ${itemek.email}</li>
+                                <li>Street: ${itemek.address.street}</li>`
+                    })
+                    
                     console.log(JSON.stringify(user))
-                    console.log('Változó típusa:', typeof(user))
-                    utilities.getView('users', res, JSON.stringify(user))
+                    console.log('\'user\' Változó típusa:', typeof(user))
+                    console.log('\'userDetails\' Változó típusa:', typeof(userDetails))
+                    utilities.getView('users', res, userDetails)
                 })
                 return
         }
