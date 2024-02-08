@@ -40,12 +40,15 @@ const server = http.createServer( (req, res) => {
             return;
     }
 
-    else if (/^\/users\/([0-9])/.test(req.url) ) {
+    else if (/^\/users\/[0-9]/.test(req.url) ) {
         console.log('req.url értéke:', req.url);
         console.log('else if kifejezés értéke:', /^\/users\/([0-9])/.test(req.url));
         let idpart =  req.url.split('/')
-        console.log('idpart értéke:', idpart);
+        console.log('idpart értéke: = req.url.split(\'/\'):', idpart);
         const id = idpart[idpart.length-1] || false
+        console.log('idpart.length:', idpart.length);
+        console.log('idpart.length-1:', idpart.length-1);
+        console.log('idpart[idpart.length-1]:', idpart[idpart.length-1]);
         console.log('id változó értéke:', id);
 
         if (id) {
@@ -75,6 +78,23 @@ const server = http.createServer( (req, res) => {
     else {
         res.write('Az oldal nem található')
     }
+
+////////////////////////////////
+
+const fs = require('fs');
+
+const fileToCheck = 'package.json'; // Ellenőrizni kívánt fájl elérési útja
+
+// Az elérhetőség ellenőrzése
+fs.access(fileToCheck, fs.constants.F_OK, (err) => {
+  if (err) {
+    console.error('A fájl nem létezik vagy nem elérhető.');
+  } else {
+    console.log('A fájl létezik és elérhető.');
+  }
+});
+
+//////////////////////////////
 
     res.end();
 
